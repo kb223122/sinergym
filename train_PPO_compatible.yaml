@@ -1,0 +1,67 @@
+# ---------------------------------------------------------------------------------------
+# ✅ PPO Training Configuration for Sinergym 3.7.3
+# ---------------------------------------------------------------------------------------
+# This configuration is compatible with:
+# - Sinergym Version: 3.7.3
+# - EnergyPlus Version: 24.2.0
+# - Python 3.12.4
+
+# Environment Configuration
+environment: Eplus-5zone-hot-continuous-v1
+episodes: 30  # Number of episodes to train (30 episodes = ~1M timesteps)
+
+# Wrappers Configuration
+wrappers:
+  - NormalizeObservation: {}
+  - NormalizeAction: {}
+  - LoggerWrapper: {}
+  - CSVLogger: {}
+
+# Environment Parameters
+env_params:
+  timesteps_per_hour: 4  # 15-minute timesteps
+  runperiod: [1, 1, 1991, 31, 12, 1991]  # Full year simulation
+  reward:
+    temperature_variables: ["air_temperature"]
+    energy_variables: ["HVAC_electricity_demand_rate"]
+    range_comfort_winter: [20.0, 23.5]
+    range_comfort_summer: [23.0, 26.0]
+    summer_start: [6, 1]
+    summer_final: [9, 30]
+    energy_weight: 0.5
+    lambda_energy: 0.0001
+    lambda_temperature: 1.0
+
+# Algorithm Configuration (PPO)
+algorithm:
+  name: PPO
+  parameters:
+    policy: MlpPolicy
+    learning_rate: 0.0003
+    n_steps: 2048
+    batch_size: 128
+    n_epochs: 10
+    gamma: 0.9
+    gae_lambda: 0.95
+    clip_range: 0.2
+    ent_coef: 0.0
+    vf_coef: 0.5
+    max_grad_norm: 0.9
+    normalize_advantage: true
+    verbose: 1
+    seed: 42
+    policy_kwargs:
+      net_arch: [64, 64]
+      activation_fn: torch.nn.ReLU
+  log_interval: 500
+
+# Evaluation Configuration
+evaluation:
+  eval_length: 3  # Number of episodes per evaluation
+  eval_freq: 5    # Evaluate every 5 episodes
+
+# Model Configuration (set to null for training from scratch)
+model: null
+
+# Cloud Configuration (empty for local runs)
+cloud: {}
