@@ -42,6 +42,8 @@ from sinergym.utils.wrappers import (
     CSVLogger              # Saves data to files
 )
 
+from sinergym.utils.distilbert_feature_extractor import DistilBertFeatureExtractor  # NEW: Import custom feature extractor
+
 print("✓ All libraries imported successfully!")
 
 # =============================================================================
@@ -126,33 +128,27 @@ def create_simple_environment(env_name, experiment_name, for_training=True):
 
 def create_simple_ppo_model(env):
     """
-    Create a PPO model with simple, good settings for beginners.
-    
-    Args:
-        env: The environment the AI will learn in
-        
-    Returns:
-        PPO model ready for training
+    Create a PPO model with DistilBERT feature extractor.
     """
-    print(f"\nStep 4: Creating PPO model...")
-    
-    # Create the PPO model
+    print(f"\nStep 4: Creating PPO model with DistilBERT feature extractor...")
     model = PPO(
-        policy='MlpPolicy',         # Use a neural network policy
-        env=env,                    # Environment to learn in
-        learning_rate=LEARNING_RATE, # How fast to learn
-        n_steps=N_STEPS,           # Steps before each update
-        batch_size=BATCH_SIZE,     # Training batch size
-        verbose=1                  # Print progress
+        policy='MlpPolicy',  # We'll override the feature extractor below
+        env=env,
+        learning_rate=LEARNING_RATE,
+        n_steps=N_STEPS,
+        batch_size=BATCH_SIZE,
+        verbose=1,
+        policy_kwargs={
+            'features_extractor_class': DistilBertFeatureExtractor,
+            'features_extractor_kwargs': {'features_dim': 128},  # You can adjust features_dim
+        }
     )
-    
-    print(f"✓ PPO model created:")
-    print(f"  - Policy: Neural network (MlpPolicy)")
+    print(f"✓ PPO model created with DistilBERT feature extractor:")
+    print(f"  - Policy: Neural network (MlpPolicy + DistilBERT)")
     print(f"  - Learning rate: {LEARNING_RATE}")
     print(f"  - Steps per update: {N_STEPS}")
     print(f"  - Batch size: {BATCH_SIZE}")
     print(f"  - Device: {model.device}")
-    
     return model
 
 # =============================================================================
