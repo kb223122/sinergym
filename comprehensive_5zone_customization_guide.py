@@ -469,30 +469,34 @@ def run_comprehensive_demo():
     # Create reward functions
     reward_functions = create_custom_reward_functions()
     
-    # Create test observations
+    # Create test observations with all required variables
     test_observations = [
         {
             'air_temperature': 22.0,  # Comfortable
             'HVAC_electricity_demand_rate': 5000.0,  # Moderate energy
             'month': 1,
+            'day_of_month': 15,
             'hour': 12
         },
         {
             'air_temperature': 28.0,  # Too hot
             'HVAC_electricity_demand_rate': 8000.0,  # High energy
             'month': 7,
+            'day_of_month': 20,
             'hour': 14
         },
         {
             'air_temperature': 18.0,  # Too cold
             'HVAC_electricity_demand_rate': 6000.0,  # High energy
             'month': 12,
+            'day_of_month': 10,
             'hour': 8
         },
         {
             'air_temperature': 24.0,  # Comfortable
             'HVAC_electricity_demand_rate': 3000.0,  # Low energy
             'month': 4,
+            'day_of_month': 25,
             'hour': 16
         }
     ]

@@ -14,7 +14,7 @@ when you have Sinergym installed.
 import math
 from datetime import datetime
 
-def simulate_reward_calculation(air_temp, hvac_power, energy_weight, lambda_energy, lambda_temp, month):
+def simulate_reward_calculation(air_temp, hvac_power, energy_weight, lambda_energy, lambda_temp, month, day_of_month=15):
     """
     Simulate the LinearReward calculation for demonstration.
     """

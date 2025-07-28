@@ -25,6 +25,7 @@ def test_reward_parameters():
             'air_temperature': 22.0,  # Comfortable temperature
             'HVAC_electricity_demand_rate': 3000.0,  # Low energy consumption
             'month': 4,  # Spring
+            'day_of_month': 15,
             'hour': 12
         },
         {
@@ -32,6 +33,7 @@ def test_reward_parameters():
             'air_temperature': 28.0,  # Too hot
             'HVAC_electricity_demand_rate': 8000.0,  # High energy consumption
             'month': 7,  # Summer
+            'day_of_month': 20,
             'hour': 14
         },
         {
@@ -39,6 +41,7 @@ def test_reward_parameters():
             'air_temperature': 18.0,  # Too cold
             'HVAC_electricity_demand_rate': 6000.0,  # High energy consumption
             'month': 12,  # Winter
+            'day_of_month': 10,
             'hour': 8
         },
         {
@@ -46,6 +49,7 @@ def test_reward_parameters():
             'air_temperature': 24.0,  # Comfortable temperature
             'HVAC_electricity_demand_rate': 5000.0,  # Moderate energy consumption
             'month': 5,  # Spring
+            'day_of_month': 25,
             'hour': 16
         }
     ]
@@ -114,6 +118,7 @@ def test_reward_parameters():
                 'air_temperature': obs_data['air_temperature'],
                 'HVAC_electricity_demand_rate': obs_data['HVAC_electricity_demand_rate'],
                 'month': obs_data['month'],
+                'day_of_month': obs_data['day_of_month'],
                 'hour': obs_data['hour']
             }
             
