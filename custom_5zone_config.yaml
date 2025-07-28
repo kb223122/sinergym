@@ -1,0 +1,127 @@
+# Custom 5Zone Hot Environment Configuration
+# =========================================
+# This file demonstrates various customizations for the Eplus-5zone-hot-continuous-v1 environment
+
+# Basic Configuration
+id: Custom_5Zone_Hot_Experiment
+environment: Eplus-5zone-hot-continuous-v1
+episodes: 3
+
+# Environment Parameters
+env_params:
+  # Custom run period (1 week instead of 1 year)
+  config_params:
+    runperiod: [1, 1, 1991, 1, 7, 1991]  # January 1-7, 1991
+    timesteps_per_hour: 4  # 15-minute timesteps (instead of 1 hour)
+  
+  # Custom reward function parameters
+  reward: LinearReward
+  reward_kwargs:
+    temperature_variables: ['air_temperature']
+    energy_variables: ['HVAC_electricity_demand_rate']
+    range_comfort_winter: [20.0, 23.5]
+    range_comfort_summer: [23.0, 26.0]
+    summer_start: [6, 1]
+    summer_final: [9, 30]
+    energy_weight: 0.6  # 60% energy focus, 40% comfort
+    lambda_energy: 1.2e-4  # Energy penalty coefficient
+    lambda_temperature: 0.8  # Comfort penalty coefficient
+  
+  # Weather variability (adds realistic noise to weather data)
+  weather_variability:
+    Site Outdoor Air DryBulb Temperature: [2.0, 0.0, 24.0]  # sigma, mu, tau
+    Site Outdoor Air Relative Humidity: [5.0, 0.0, 24.0]
+  
+  # Seed for reproducibility
+  seed: 42
+
+# PPO Algorithm Parameters
+algorithm:
+  name: PPO
+  log_interval: 1
+  parameters:
+    policy: MlpPolicy
+    learning_rate: 0.0003
+    n_steps: 1024  # Smaller for shorter episodes
+    batch_size: 64
+    n_epochs: 10
+    gamma: 0.99
+    gae_lambda: 0.95
+    clip_range: 0.2
+    clip_range_vf: null
+    normalize_advantage: true
+    ent_coef: 0.01
+    vf_coef: 0.5
+    max_grad_norm: 0.5
+    use_sde: false
+    sde_sample_freq: -1
+    rollout_buffer_class: null
+    rollout_buffer_kwargs: null
+    target_kl: null
+    stats_window_size: 100
+    tensorboard_log: null
+    policy_kwargs: null
+    verbose: 1
+    seed: 42
+    device: auto
+    _init_setup_model: true
+
+# Evaluation Settings
+evaluation:
+  eval_freq: 1  # Evaluate every episode
+  eval_length: 1  # 1 evaluation episode
+
+# Environment Wrappers
+wrappers:
+  # Normalize actions to [-1, 1] range for better training
+  - NormalizeAction: {}
+  
+  # Normalize observations to have mean=0, std=1
+  - NormalizeObservation: {}
+  
+  # Log environment interactions
+  - LoggerWrapper:
+      storage_class: sinergym.utils.logger.LoggerStorage
+  
+  # Save data to CSV files
+  - CSVLogger: {}
+  
+  # Optional: Weights & Biases logging (uncomment and configure)
+  # - WandBLogger:
+  #     entity: your_username
+  #     project_name: sinergym_custom_5zone
+  #     run_name: custom_experiment
+  #     tags: ['PPO', '5zone', 'hot', 'custom', '1week']
+  #     save_code: true
+  #     dump_frequency: 1000
+  #     artifact_save: false
+
+# Start from scratch (no pre-trained model)
+model: null
+
+# Alternative model configurations (uncomment to use):
+
+# Load from local path:
+# model:
+#   local_path: ./path/to/your/model.zip
+#   normalization:
+#     mean: ./path/to/mean.txt
+#     var: ./path/to/var.txt
+
+# Load from Weights & Biases:
+# model:
+#   entity: your_username
+#   project: sinergym_project
+#   artifact_name: your_model_artifact
+#   artifact_tag: latest
+#   artifact_path: Sinergym_output/evaluation/
+#   model_path: Sinergym_output/evaluation/best_model.zip
+#   normalization:
+#     mean: Sinergym_output/evaluation/mean.txt
+#     var: Sinergym_output/evaluation/var.txt
+
+# Google Cloud storage (optional):
+# cloud:
+#   remote_store: your-bucket-name
+#   auto_delete:
+#     group_name: your-instance-group
