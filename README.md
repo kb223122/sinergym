@@ -1,172 +1,245 @@
-#my first
-<div align="center">
-  <img src="images/logo.png" width=50%><br><br>
-</div>
+# 5Zone Environment PPO Training with Custom Reward Weights and Run Periods
 
-</p>
-  <p align="center">
-    <a href="https://github.com/ugr-sail/sinergym/releases">
-      <img alt="Github latest release" src="https://img.shields.io/github/release-date/ugr-sail/sinergym" />
-    </a>
-    <a href="https://github.com/ugr-sail/sinergym/commits/main">
-      <img alt="Github last commit" src="https://img.shields.io/github/last-commit/ugr-sail/sinergym" />
-    </a>
-    <a href="https://pypi.org/project/sinergym/">
-      <img alt="pypi version" src="https://img.shields.io/pypi/v/sinergym" />
-    </a>
-    <a href="https://github.com/ugr-sail/sinergym/stargazers">
-      <img alt="pypi downloads" src="https://img.shields.io/pypi/dm/sinergym" />
-    </a>
-    <a href="https://codecov.io/gh/ugr-sail/sinergym">
-      <img src="https://codecov.io/gh/ugr-sail/sinergym/branch/main/graph/badge.svg" />
-    </a>
-    <a href="https://github.com/ugr-sail/sinergym/graphs/contributors">
-      <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/ugr-sail/sinergym" />
-    </a>
-    <a href="https://github.com/ugr-sail/sinergym/issues">
-      <img alt="Github issues" src="https://img.shields.io/github/issues/ugr-sail/sinergym?color=0088ff" />
-    </a>
-    <a href="https://github.com/ugr-sail/sinergym/pulls">
-      <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/ugr-sail/sinergym?color=0088ff" />
-    </a>
-    <a href="https://github.com/ugr-sail/sinergym/blob/main/LICENSE">
-      <img alt="Github license" src="https://img.shields.io/github/license/ugr-sail/sinergym" />
-    </a>
-    <a href="https://www.python.org/downloads/release/python-3120/">
-      <img alt="pypi Python version" src="https://img.shields.io/pypi/pyversions/sinergym" />
-    </a>
-    <a href="https://hub.docker.com/r/sailugr/sinergym/tags">
-      <img alt="DockerHub last version" src="https://img.shields.io/docker/v/sailugr/sinergym?color=blue&label=Docker%20Image%20Version&logo=docker" />
-    </a>
-    <br />
-    <br />
-    <a href="https://code.visualstudio.com/">
-      <img src="https://img.shields.io/badge/Supported%20by-VSCode%20Power%20User%20%E2%86%92-gray.svg?colorA=655BE1&colorB=4F44D6&style=for-the-badge"/>
-    </a>
-  </p>
+This repository contains complete PPO training examples for the Sinergym `Eplus-5zone-hot-continuous-v1` environment with customizable reward weights and run periods.
 
-<div align="center">
-  <img src="images/general_blueprint.png" width=80%><br><br>
-</div>
+## 🚀 Quick Start
 
-## About Sinergym
-
-*Sinergym* provides a [Gymnasium](https://gymnasium.farama.org/)-based interface to interact with simulation engines such as *EnergyPlus*. This allows control in simulation time through custom controllers, including **reinforcement learning** agents.
-
-For more information about *Sinergym*, refer to its [documentation](https://ugr-sail.github.io/sinergym/compilation/main/index.html).
-
-## Main features
-
-⚙️  **Simulation engines compatibility**. *Sinergym* is currently compatible with the [EnergyPlus Python API](https://energyplus.readthedocs.io/en/latest/api.html) for controller-building communication.
-
-📊  **Benchmark environments**. Similar to *Atari* or *Mujoco*, *Sinergym* allows the use of benchmarking environments to test and compare RL algorithms or custom control strategies.
-
-🛠️  **Custom experimentation**. *Sinergym* enables effortless customization of experimental settings. Users can create their own environments or customize pre-configured ones within *Sinergym*. Select your preferred reward functions, wrappers, controllers, and more!
-
-🏠  **Automatic building model adaptation**. Automatic adaptation of building models to align with user-defined settings.
-
-🪛  **Automatic actuator control**. Seamless management of building actuators via the Gymnasium interface. Users only need to specify actuator names, and *Sinergym* will do the rest.
-
-🤖  **Stable Baselines 3 integration**. *Sinergym* is highly integrated with [Stable Baselines 3](https://github.com/DLR-RM/stable-baselines3) algorithms, wrappers and callbacks.
-
-✅  **Controller-agnostic**. Any controller compatible with the Gymnasium interface can be integrated with *Sinergym*.
-
-☁️  **Google Cloud execution**. *Sinergym* provides several features to execute experiments in [Google Cloud](https://cloud.google.com/).
-
-📈  **Weights & Biases logging**. Automate the logging of training and evaluation data, and record your models in the cloud. *Sinergym* facilitates reproducibility and cloud data storage through [Weights and Biases](https://wandb.ai/site) integration.
-
-📒  **Notebook examples**. Learn how to get the most out of *Sinergym* through our [notebooks examples](https://github.com/ugr-sail/sinergym/tree/main/examples).
-
-📚  **Extensive documentation, unit tests, and GitHub actions workflows**. *Sinergym* follows proper development practices facilitating community contributions.
-
-
-<div align="center">
-  <img src="images/operation_diagram.png"><br><br>
-</div>
-
-## Project structure
-
-This repository is organized into the following directories:
-
-- `sinergym/`: the source code of *Sinergym*.
-- `docs/`: *Sinergym*'s documentation sources.
-- `examples/`: notebooks with several examples illustrating how to use *Sinergym*.
-- `tests/`: *Sinergym* tests code.
-- `scripts/`: auxiliar and help scripts.
-
-## Available environments
-
-For a complete and up-to-date list of available environments, please refer to [our documentation](https://ugr-sail.github.io/sinergym/compilation/main/pages/environments.html#).
-
-## Installation
-
-Read [INSTALL.md](https://github.com/ugr-sail/sinergym/blob/main/INSTALL.md) for detailed installation instructions.
-
-## Usage example
-
-This is a simple script using *Sinergym*:
-
-```python
-import gymnasium as gym
-import sinergym
-
-# Create environment
-env = gym.make('Eplus-datacenter-mixed-continuous-stochastic-v1')
-
-# Initialization
-obs, info = env.reset()
-truncated = terminated = False
-
-# Run episode
-while not (terminated or truncated):
-    action = env.action_space.sample() # random action selection
-    obs, reward, terminated, truncated, info = env.step(action)
-
-env.close()
+### 1. Install Dependencies
+```bash
+pip install sinergym[drl] stable-baselines3 gymnasium numpy pandas matplotlib
 ```
 
-Several usage examples can be consulted [here](https://ugr-sail.github.io/sinergym/compilation/main/pages/notebooks/basic_example.html#Basic-example).
+### 2. Run Simple Training
+```bash
+python simple_ppo_training.py
+```
 
-## Contributing
+### 3. View Available Configurations
+```bash
+python environment_config.py
+```
 
-To report questions and issues, [open an issue](https://github.com/ugr-sail/sinergym/issues) following the provided templates. We appreciate your feedback!
+## 📁 Files Overview
 
-Check out [CONTRIBUTING.md](https://github.com/ugr-sail/sinergym/blob/main/CONTRIBUTING.md) for specific details on how to contribute.
+### Core Training Scripts
+- **`simple_ppo_training.py`** - Easy-to-use PPO training with configuration utility
+- **`ppo_5zone_training.py`** - Comprehensive PPO training with detailed setup
+- **`environment_config.py`** - Configuration utility for reward weights and run periods
 
-## Projects using Sinergym
+### Testing and Demo Scripts
+- **`quick_reward_demo.py`** - Quick demonstration of reward weight effects
+- **`5zone_customization_guide.py`** - Comprehensive guide with practical examples
+- **`simple_reward_test.py`** - Detailed reward function testing
 
-The following are some of the projects using *Sinergym*:
+### Documentation
+- **`IMPLEMENTATION_GUIDE.md`** - Complete implementation reference
+- **`README.md`** - This file
 
-- [Demosthen/ActiveRL](https://github.com/Demosthen/ActiveRL)
-- [VectorInstitute/HV-Ai-C](https://github.com/VectorInstitute/HV-Ai-C)
-- [rdnfn/beobench](https://github.com/rdnfn/beobench)
+## 🎯 Key Features
 
-📝 If you want to appear in this list, feel free to open a pull request and include the following badge in your repository:
+### Customizable Reward Weights
+- **`energy_weight`** (0.0-1.0): Controls balance between energy and comfort
+- **`lambda_energy`**: Scales energy consumption penalty
+- **`lambda_temperature`**: Scales comfort violation penalty
 
-<p align="center">
-  <a href="https://github.com/ugr-sail/sinergym">
-      <img src="https://img.shields.io/badge/Powered%20by-Sinergym%20%E2%86%92-gray.svg?colorA=00BABF&colorB=4BF2F7&style=for-the-badge"/>
-  </a>
-</p>
+### Configurable Run Periods
+- **`timestep_per_hour`**: Controls simulation granularity (1, 2, 4 hours)
+- **`runperiod`**: Controls episode duration (seasonal periods)
 
-## Repository activity
+## 🔧 Configuration Options
 
-![Alt](https://repobeats.axiom.co/api/embed/d8dc96d423d6996351e728a2412dba2551f99cca.svg "Repobeats analytics image")
+### Reward Configurations
+```python
+# Available reward configurations:
+'default'           # Balanced energy and comfort
+'energy_focused'    # Prioritizes energy savings
+'comfort_focused'   # Prioritizes occupant comfort
+'extreme_energy'    # Maximum energy savings
+'extreme_comfort'   # Maximum comfort priority
+'custom'           # Custom configuration
+```
 
-## Citing Sinergym
+### Run Period Configurations
+```python
+# Available run period configurations:
+'default'              # Full year with 1-hour timesteps
+'summer_only'          # Summer months (June-August)
+'winter_only'          # Winter months (December-February)
+'spring_only'          # Spring months (March-May)
+'two_hour_timesteps'   # Full year with 2-hour timesteps
+'four_hour_timesteps'  # Full year with 4-hour timesteps
+'summer_two_hour'      # Summer with 2-hour timesteps
+```
 
-If you use *Sinergym* in your work, please cite our [paper](https://www.sciencedirect.com/science/article/abs/pii/S0378778824011915):
+### Training Configurations
+```python
+# Available training configurations:
+'default'        # Standard training (50k timesteps)
+'quick_test'     # Quick test training (10k timesteps)
+'long_training'  # Extended training (200k timesteps)
+'high_lr'        # High learning rate
+'low_lr'         # Low learning rate
+```
 
-```bibtex
-@article{Campoy2025sinergym,
-  title = {Sinergym – A virtual testbed for building energy optimization with Reinforcement Learning},
-  author = {Alejandro Campoy-Nieves and Antonio Manjavacas and Javier Jiménez-Raboso and Miguel Molina-Solana and Juan Gómez-Romero},
-  journal   = {Energy and Buildings},
-  volume = {327},
-  articleno = {115075},
-  year = {2025},
-  issn = {0378-7788},
-  doi = {10.1016/j.enbuild.2024.115075},
-  url = {https://www.sciencedirect.com/science/article/pii/S0378778824011915},
+## 🚀 Usage Examples
+
+### Example 1: Energy-Focused Training (Summer Only)
+```python
+# In simple_ppo_training.py, modify these lines:
+reward_config_name = 'energy_focused'
+run_period_config_name = 'summer_only'
+training_config_name = 'quick_test'
+```
+
+### Example 2: Comfort-Focused Training (Full Year)
+```python
+# In simple_ppo_training.py, modify these lines:
+reward_config_name = 'comfort_focused'
+run_period_config_name = 'default'
+training_config_name = 'default'
+```
+
+### Example 3: Custom Configuration
+```python
+# In simple_ppo_training.py, modify these lines:
+reward_config_name = 'custom'
+run_period_config_name = 'two_hour_timesteps'
+training_config_name = 'long_training'
+```
+
+## 📊 Reward Weight Effects
+
+| Configuration | Energy Weight | Lambda Energy | Lambda Temp | Effect |
+|---------------|---------------|---------------|-------------|---------|
+| Default | 0.50 | 1.00e-04 | 1.00 | Balanced |
+| Energy-Focused | 0.80 | 2.00e-04 | 0.50 | Prioritizes energy |
+| Comfort-Focused | 0.20 | 5.00e-05 | 2.00 | Prioritizes comfort |
+| Extreme Energy | 0.90 | 5.00e-04 | 0.10 | Maximum energy savings |
+| Extreme Comfort | 0.10 | 1.00e-05 | 5.00 | Maximum comfort priority |
+
+## ⏱️ Run Period Effects
+
+| Configuration | Timesteps/Hour | Duration | Episodes | Use Case |
+|---------------|----------------|----------|----------|----------|
+| Default | 1 | Full year | 8760 | Comprehensive analysis |
+| Summer Only | 1 | 3 months | 2208 | Summer optimization |
+| Winter Only | 1 | 3 months | 2160 | Winter optimization |
+| 2-Hour | 2 | Full year | 4380 | Faster training |
+| 4-Hour | 4 | Full year | 2190 | Very fast training |
+
+## 🎯 Training Process
+
+### 1. Environment Setup
+- Creates custom reward function with specified weights
+- Configures run period with specified timesteps and duration
+- Verifies all configurations are applied correctly
+
+### 2. PPO Training
+- Uses Stable-Baselines3 PPO implementation
+- Includes evaluation callbacks for monitoring
+- Saves checkpoints and best model
+
+### 3. Evaluation
+- Evaluates trained model on multiple episodes
+- Reports mean reward and performance metrics
+- Saves final model with timestamp
+
+## 📁 Output Files
+
+After training, you'll find:
+- **`./models/`** - Saved model checkpoints and final model
+- **`./logs/`** - Training logs and evaluation results
+- **Console output** - Real-time training progress and final results
+
+## 🔍 Verification Methods
+
+### 1. Environment Configuration Verification
+```python
+# Verify reward function parameters
+print(f"Energy Weight: {env.reward_fn.energy_weight}")
+print(f"Lambda Energy: {env.reward_fn.lambda_energy}")
+print(f"Lambda Temperature: {env.reward_fn.lambda_temperature}")
+
+# Verify run period settings
+print(f"Timestep per Hour: {env.timestep_per_hour}")
+print(f"Run Period: {env.runperiod}")
+print(f"Timesteps per Episode: {env.timestep_per_episode}")
+```
+
+### 2. Reward Calculation Testing
+```python
+# Test reward calculation
+test_obs = {
+    'air_temperature': 28.0,
+    'HVAC_electricity_demand_rate': 8000.0,
+    'month': 7, 'day_of_month': 15, 'hour': 14
+}
+reward, terms = env.reward_fn(test_obs)
+print(f"Reward: {reward}")
+```
+
+## 🛠️ Customization Guide
+
+### Modifying Reward Weights
+```python
+# In simple_ppo_training.py, change these lines:
+reward_config_name = 'energy_focused'  # or any other configuration
+```
+
+### Modifying Run Periods
+```python
+# In simple_ppo_training.py, change these lines:
+run_period_config_name = 'summer_only'  # or any other configuration
+```
+
+### Adding Custom Configurations
+```python
+# In environment_config.py, add to the configs dictionaries:
+'my_custom_reward': {
+    'energy_weight': 0.6,
+    'lambda_energy': 1.5e-4,
+    'lambda_temperature': 1.2,
+    'description': 'My custom configuration'
 }
 ```
+
+## 🎯 Best Practices
+
+1. **Start with balanced settings**: Use `energy_weight=0.5` initially
+2. **Test different configurations**: Experiment with various lambda values
+3. **Monitor both metrics**: Track both energy consumption and comfort violations
+4. **Verify configurations**: Always check that your changes are applied correctly
+5. **Consider your use case**: Choose timesteps and periods based on your research goals
+
+## 🚨 Troubleshooting
+
+### Common Issues
+1. **Environment creation fails**: Ensure EnergyPlus is installed
+2. **Reward calculation errors**: Check that all required observation keys are present
+3. **Configuration not applied**: Verify that you're setting the environment attributes correctly
+
+### Verification Checklist
+- [ ] Environment creates successfully
+- [ ] Custom reward function is applied
+- [ ] Run period settings are correct
+- [ ] Reward calculation works with test observations
+- [ ] Episode length matches expected timesteps
+
+## 📚 Additional Resources
+
+- **Sinergym Documentation**: https://ugr-sail.github.io/sinergym/
+- **Stable-Baselines3 Documentation**: https://stable-baselines3.readthedocs.io/
+- **5Zone Environment Guide**: See `IMPLEMENTATION_GUIDE.md`
+
+## 🎉 Example Results
+
+After running the training, you should see output like:
+```
+✅ TRAINING COMPLETED SUCCESSFULLY!
+==================================================
+Configuration: energy_focused + summer_only + quick_test
+Final Mean Reward: -1.2345
+Model saved to: ./models/ppo_5zone_final_20241201_143022
+```
+
+This complete setup allows you to easily customize and train PPO agents on the 5Zone environment with your specific reward weights and run periods!
